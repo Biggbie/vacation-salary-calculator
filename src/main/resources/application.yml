@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class: "org.postgresql.Driver"
-    url: "jdbc:postgresql://localhost:49156/vacation_salary_calculator"
+    url: "http://localhost:49156/vacation_salary_calculator"
     username: "user"
     password: "password"
   jpa:
