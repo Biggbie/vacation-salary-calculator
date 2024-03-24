@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>VacationCalculator</artifactId>
+    <groupId>ru.plevda</groupId>
+    <artifactId>vacation-salary-calculator</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
@@ -64,6 +64,9 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.2.4</version>
+                <configuration>
+                    <mainClass>ru.plevda.vacation.salary.calculator.VacationSalaryCalculatorApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>

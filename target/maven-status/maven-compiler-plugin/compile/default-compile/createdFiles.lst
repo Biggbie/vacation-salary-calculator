@@ -1,0 +1,5 @@
+ru\plevda\vacation\salary\calculator\model\VacationSalaryCalculatorResponse.class
+ru\plevda\vacation\salary\calculator\service\VacationCalculatorService.class
+ru\plevda\vacation\salary\calculator\controller\VacationCalculatorController.class
+ru\plevda\vacation\salary\calculator\model\Vacation.class
+ru\plevda\vacation\salary\calculator\VacationSalaryCalculatorApplication.class
