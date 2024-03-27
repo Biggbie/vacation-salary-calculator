@@ -28,7 +28,7 @@ public class VacationCalculatorService {
     }
 
     public VacationSalaryCalculatorResponse calculateWithHolidays(double averageSalary, int vacationDays, List<LocalDate> vacationDates) {
-        // Расчет с учетом праздничных дней
+        // Расчет с учетом праздничных дней (сделан с учетом что дни отпуска могут приходится на разные месяцы)
 
         double totalVacationSalary = 0;
 
@@ -43,7 +43,7 @@ public class VacationCalculatorService {
             // Вычисляем среднюю зарплату за рабочий день в этом месяце
             double averageSalaryPerDay = averageSalary / workingDays;
 
-            // Получаем количество рабочих дней в отпуске для конкретного месяца (если отпускные дни выпадают в разные месяцы)
+            // Получаем количество рабочих дней в отпуске для конкретного месяца
             int vacationDaysInMonth = calculateVacationDaysInMonth(vacationDate, vacationDays);
 
             // Рассчитываем отпускные для этого месяца и добавляем к общей сумме
