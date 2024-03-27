@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 public class VacationCalculatorService {
 
     private static final int MONTHS_IN_YEAR = 12;
-    private static final double NDFL_FACTOR = 0.87;
+    private static final double ;
 
     public VacationSalaryCalculatorResponse calculate(Double averageSalary, Integer vacationDays) {
         // Обычный расчет
