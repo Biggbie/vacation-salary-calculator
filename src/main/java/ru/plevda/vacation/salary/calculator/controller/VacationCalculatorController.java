@@ -8,7 +8,6 @@ import ru.plevda.vacation.salary.calculator.model.VacationSalaryCalculatorRespon
 import ru.plevda.vacation.salary.calculator.service.VacationCalculatorService;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 public class VacationCalculatorController {
@@ -17,14 +16,17 @@ public class VacationCalculatorController {
     private VacationCalculatorService vacationCalculatorService;
 
     @GetMapping("/calculate")
-    public VacationSalaryCalculatorResponse calculateVacationSalary(@RequestParam double averageSalary,
-                                                                    @RequestParam int vacationDays,
-                                                                    @RequestParam(required = false) List<LocalDate> vacationDates) {
-        if (vacationDates != null && !vacationDates.isEmpty()) {
-            return vacationCalculatorService.calculateWithHolidays(averageSalary, vacationDays, vacationDates);
+    public VacationSalaryCalculatorResponse calculateVacationSalary(@RequestParam(name = "averageSalary") Double averageSalary,
+                                                                    @RequestParam(required = false, name = "vacationDays") Integer vacationDays,
+                                                                    @RequestParam(required = false, name = "startVacationDate") LocalDate startVacationDate,
+                                                                    @RequestParam(required = false, name = "endVacationDate") LocalDate endVacationDate) {
+        if (vacationDays != null && (startVacationDate != null || endVacationDate != null)) {
+            return new VacationSalaryCalculatorResponse("Укажите только либо количество дней отпуска, либо конкретные даты");
+        }
+        if (startVacationDate != null && endVacationDate != null) {
+            return vacationCalculatorService.calculateWithHolidays(averageSalary, startVacationDate, endVacationDate);
         } else {
             return vacationCalculatorService.calculate(averageSalary, vacationDays);
         }
     }
 }
-

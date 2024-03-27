@@ -7,7 +7,6 @@ import ru.plevda.vacation.salary.calculator.util.PublicHolidays;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
@@ -15,7 +14,7 @@ public class VacationCalculatorService {
 
     private static final int MONTHS_IN_YEAR = 12;
 
-    public VacationSalaryCalculatorResponse calculate(double averageSalary, int vacationDays) {
+    public VacationSalaryCalculatorResponse calculate(Double averageSalary, Integer vacationDays) {
         // Обычный расчет
         YearMonth currentYear = YearMonth.now();
         int totalDaysInYear = IntStream.rangeClosed(1, MONTHS_IN_YEAR)
@@ -27,30 +26,21 @@ public class VacationCalculatorService {
         return new VacationSalaryCalculatorResponse(formattedSalary);
     }
 
-    public VacationSalaryCalculatorResponse calculateWithHolidays(double averageSalary, int vacationDays, List<LocalDate> vacationDates) {
-        // Расчет с учетом праздничных дней (сделан с учетом что дни отпуска могут приходится на разные месяцы)
-
-        double totalVacationSalary = 0;
-
-        for (LocalDate vacationDate : vacationDates) {
-            // Получаем месяц и год даты отпуска
-            int year = vacationDate.getYear();
-            int month = vacationDate.getMonthValue();
-            // Получаем количество рабочих дней в месяце
-            int workingDays = calculateWorkingDays(year, month);
-            // Вычисляем среднюю зарплату за рабочий день в этом месяце
-            double averageSalaryPerDay = averageSalary / workingDays;
-            // Получаем количество рабочих дней в отпуске для конкретного месяца
-            int vacationDaysInMonth = calculateVacationDaysInMonth(vacationDate, vacationDays);
-            // Рассчитываем отпускные для этого месяца и добавляем к общей сумме
-            totalVacationSalary += averageSalaryPerDay * vacationDaysInMonth;
+    public VacationSalaryCalculatorResponse calculateWithHolidays(Double averageSalary, LocalDate startVacationDate, LocalDate endVacationDate) {
+        // Расчет с учетом праздничных дней в указанном промежутке дат
+        int workingDaysInVacation = 0;
+        for (LocalDate date = startVacationDate; !date.isAfter(endVacationDate); date = date.plusDays(1)) {
+            if (isWorkingDay(date)) {
+                workingDaysInVacation++;
+            }
         }
-        // Форматируем результат и возвращаем
+        double averageSalaryPerDay = averageSalary / countWorkingDaysInMonth(startVacationDate.getYear(), startVacationDate.getMonthValue());
+        double totalVacationSalary = averageSalaryPerDay * workingDaysInVacation;
         String formattedSalary = new DecimalFormat("#.##").format(totalVacationSalary);
         return new VacationSalaryCalculatorResponse(formattedSalary);
     }
 
-    private int calculateWorkingDays(int year, int month) {
+    private int countWorkingDaysInMonth(int year, int month) {
         // Рассчитываем количество рабочих дней в указанном месяце
         int workingDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
@@ -68,23 +58,5 @@ public class VacationCalculatorService {
     private boolean isWorkingDay(LocalDate date) {
         // Проверяем, является ли указанный день рабочим (не выходным и не праздничным)
         return date.getDayOfWeek().getValue() < 6 && !PublicHolidays.HOLIDAYS.contains(date);
-    }
-
-    private int calculateVacationDaysInMonth(LocalDate vacationDate, int vacationDays) {
-        // Вычисляем количество рабочих дней в отпуске для указанного месяца
-        YearMonth yearMonth = YearMonth.of(vacationDate.getYear(), vacationDate.getMonth());
-        int daysInMonth = yearMonth.lengthOfMonth();
-        int remainingVacationDays = vacationDays;
-        int workingDaysInVacation = 0;
-        for (int day = 1; day <= daysInMonth; day++) {
-            LocalDate date = LocalDate.of(vacationDate.getYear(), vacationDate.getMonth(), day);
-            if (isWorkingDay(date)) {
-                workingDaysInVacation++;
-                if (--remainingVacationDays == 0) {
-                    break; // Заканчиваем, когда заканчиваются отпускные дни в месяце
-                }
-            }
-        }
-        return workingDaysInVacation;
     }
 }

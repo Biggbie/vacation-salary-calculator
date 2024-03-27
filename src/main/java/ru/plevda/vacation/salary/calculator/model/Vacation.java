@@ -7,7 +7,8 @@ import java.util.List;
 
 @Data
 public class Vacation {
-    private double averageSalary;
-    private int vacationDays;
-    private List<LocalDate> vacationDates;
+    private Double averageSalary;
+    private Integer vacationDays;
+    private LocalDate startVacationDate;
+    private LocalDate endVacationDate;
 }
