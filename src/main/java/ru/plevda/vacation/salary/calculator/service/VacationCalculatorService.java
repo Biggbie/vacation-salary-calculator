@@ -36,20 +36,15 @@ public class VacationCalculatorService {
             // Получаем месяц и год даты отпуска
             int year = vacationDate.getYear();
             int month = vacationDate.getMonthValue();
-
             // Получаем количество рабочих дней в месяце
             int workingDays = calculateWorkingDays(year, month);
-
             // Вычисляем среднюю зарплату за рабочий день в этом месяце
             double averageSalaryPerDay = averageSalary / workingDays;
-
             // Получаем количество рабочих дней в отпуске для конкретного месяца
             int vacationDaysInMonth = calculateVacationDaysInMonth(vacationDate, vacationDays);
-
             // Рассчитываем отпускные для этого месяца и добавляем к общей сумме
             totalVacationSalary += averageSalaryPerDay * vacationDaysInMonth;
         }
-
         // Форматируем результат и возвращаем
         String formattedSalary = new DecimalFormat("#.##").format(totalVacationSalary);
         return new VacationSalaryCalculatorResponse(formattedSalary);
@@ -57,12 +52,9 @@ public class VacationCalculatorService {
 
     private int calculateWorkingDays(int year, int month) {
         // Рассчитываем количество рабочих дней в указанном месяце
-
         int workingDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
-
         int daysInMonth = yearMonth.lengthOfMonth();
-
         for (int day = 1; day <= daysInMonth; day++) {
             LocalDate date = LocalDate.of(year, month, day);
             // Проверяем, является ли день рабочим
@@ -70,7 +62,6 @@ public class VacationCalculatorService {
                 workingDays++;
             }
         }
-
         return workingDays;
     }
 
@@ -81,23 +72,19 @@ public class VacationCalculatorService {
 
     private int calculateVacationDaysInMonth(LocalDate vacationDate, int vacationDays) {
         // Вычисляем количество рабочих дней в отпуске для указанного месяца
-
         YearMonth yearMonth = YearMonth.of(vacationDate.getYear(), vacationDate.getMonth());
         int daysInMonth = yearMonth.lengthOfMonth();
-
         int remainingVacationDays = vacationDays;
         int workingDaysInVacation = 0;
-
         for (int day = 1; day <= daysInMonth; day++) {
             LocalDate date = LocalDate.of(vacationDate.getYear(), vacationDate.getMonth(), day);
             if (isWorkingDay(date)) {
                 workingDaysInVacation++;
                 if (--remainingVacationDays == 0) {
-                    break; // Заканчиваем, когда заканчиваются отпускные дни
+                    break; // Заканчиваем, когда заканчиваются отпускные дни в месяце
                 }
             }
         }
-
         return workingDaysInVacation;
     }
 }
