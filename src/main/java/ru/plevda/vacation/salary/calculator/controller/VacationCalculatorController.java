@@ -21,6 +21,9 @@ public class VacationCalculatorController {
                                                   @RequestParam(required = false, name = "vacationDays") Integer vacationDays,
                                                   @RequestParam(required = false, name = "startVacationDate") LocalDate startVacationDate,
                                                   @RequestParam(required = false, name = "endVacationDate") LocalDate endVacationDate) {
+        if (averageSalary != null && vacationDays != null && startVacationDate != null && endVacationDate != null) {
+            return ResponseEntity.badRequest().build();
+        }
         if (vacationDays != null && (startVacationDate != null || endVacationDate != null)) {
             return ResponseEntity.badRequest().build();
         }
