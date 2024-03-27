@@ -41,7 +41,7 @@ public class VacationCalculatorService {
     }
 
     private int countWorkingDaysInMonth(int year, int month) {
-        // Рассчитываем количество рабочих дней в указанном месяце
+        // Рассчитываем количество рабочих дней в месяце, с которого начинается отпуск
         int workingDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
         int daysInMonth = yearMonth.lengthOfMonth();
