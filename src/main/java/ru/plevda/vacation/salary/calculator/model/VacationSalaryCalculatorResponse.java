@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VacationSalaryCalculatorResponse {
+    private String outputMessage;
     private String calculatedVacationSalary;
 }

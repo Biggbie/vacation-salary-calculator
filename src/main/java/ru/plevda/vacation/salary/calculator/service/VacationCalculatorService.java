@@ -15,6 +15,7 @@ public class VacationCalculatorService {
     private static final int MONTHS_IN_YEAR = 12;
     private static final double NDFL_FACTOR = 0.87;
     //Дополнительно введем константу, учитывающую вычет 13% НДФЛ
+    private static final String message = ("Сумма в рублях, с вычетом НДФЛ");
 
     public VacationSalaryCalculatorResponse calculate(Double averageSalary, Integer vacationDays) {
         // Обычный расчет
@@ -25,7 +26,7 @@ public class VacationCalculatorService {
         double averageDaysInMonth = (double) totalDaysInYear / MONTHS_IN_YEAR;
         double calculatedVacationSalary = (averageSalary / averageDaysInMonth) * vacationDays*NDFL_FACTOR;
         String formattedSalary = new DecimalFormat("#.##").format(calculatedVacationSalary);
-        return new VacationSalaryCalculatorResponse(formattedSalary);
+        return new VacationSalaryCalculatorResponse(message, formattedSalary);
     }
 
     public VacationSalaryCalculatorResponse calculateWithHolidays(Double averageSalary, LocalDate startVacationDate, LocalDate endVacationDate) {
@@ -39,7 +40,7 @@ public class VacationCalculatorService {
         double averageSalaryPerDay = averageSalary / countWorkingDaysInMonth(startVacationDate.getYear(), startVacationDate.getMonthValue());
         double totalVacationSalary = averageSalaryPerDay * workingDaysInVacation*NDFL_FACTOR;
         String formattedSalary = new DecimalFormat("#.##").format(totalVacationSalary);
-        return new VacationSalaryCalculatorResponse(formattedSalary);
+        return new VacationSalaryCalculatorResponse(message, formattedSalary);
     }
 
     private int countWorkingDaysInMonth(int year, int month) {
