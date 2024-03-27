@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
 public class VacationCalculatorService {
 
     private static final int MONTHS_IN_YEAR = 12;
+    private static final double NDFL_FACTOR = 0.87;
 
     public VacationSalaryCalculatorResponse calculate(Double averageSalary, Integer vacationDays) {
         // Обычный расчет
@@ -21,7 +22,7 @@ public class VacationCalculatorService {
                 .map(month -> currentYear.lengthOfMonth())
                 .sum();
         double averageDaysInMonth = (double) totalDaysInYear / MONTHS_IN_YEAR;
-        double calculatedVacationSalary = (averageSalary / averageDaysInMonth) * vacationDays;
+        double calculatedVacationSalary = (averageSalary / averageDaysInMonth) * vacationDays*NDFL_FACTOR;
         String formattedSalary = new DecimalFormat("#.##").format(calculatedVacationSalary);
         return new VacationSalaryCalculatorResponse(formattedSalary);
     }
@@ -35,7 +36,7 @@ public class VacationCalculatorService {
             }
         }
         double averageSalaryPerDay = averageSalary / countWorkingDaysInMonth(startVacationDate.getYear(), startVacationDate.getMonthValue());
-        double totalVacationSalary = averageSalaryPerDay * workingDaysInVacation;
+        double totalVacationSalary = averageSalaryPerDay * workingDaysInVacation*NDFL_FACTOR;
         String formattedSalary = new DecimalFormat("#.##").format(totalVacationSalary);
         return new VacationSalaryCalculatorResponse(formattedSalary);
     }
