@@ -1,7 +1,2 @@
 server:
   port: 8082
-
-spring:
-  datasource:
-    url: "http://localhost:49156/vacation_salary_calculator"
-
