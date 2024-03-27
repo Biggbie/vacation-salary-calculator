@@ -12,9 +12,11 @@ GET "/calculacte"
 # API requests
 
 Простой запрос:
+
 http://localhost:8082/calculate?averageSalary=50000&vacationDays=10
 
 Запрос с указанием точного дня ухода в отпуск:
+
 http://localhost:8082/calculate?averageSalary=50000&startVacationDate=2024-01-15&endVacationDate=2024-01-25
 
 # Стек проекта
