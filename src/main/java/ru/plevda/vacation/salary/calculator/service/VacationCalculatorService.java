@@ -43,7 +43,7 @@ public class VacationCalculatorService {
             // Вычисляем среднюю зарплату за рабочий день в этом месяце
             double averageSalaryPerDay = averageSalary / workingDays;
 
-            // Получаем количество рабочих дней в отпуске
+            // Получаем количество рабочих дней в отпуске для конкретного месяца (если отпускные дни выпадают в разные месяцы)
             int vacationDaysInMonth = calculateVacationDaysInMonth(vacationDate, vacationDays);
 
             // Рассчитываем отпускные для этого месяца и добавляем к общей сумме
@@ -56,7 +56,7 @@ public class VacationCalculatorService {
     }
 
     private int calculateWorkingDays(int year, int month) {
-        // Рассчитываем количество рабочих дней в указанном месяце и году
+        // Рассчитываем количество рабочих дней в указанном месяце
 
         int workingDays = 0;
         YearMonth yearMonth = YearMonth.of(year, month);
@@ -75,7 +75,7 @@ public class VacationCalculatorService {
     }
 
     private boolean isWorkingDay(LocalDate date) {
-        // Проверяем, является ли указанный день рабочим (не субботой, не воскресеньем и не праздничным)
+        // Проверяем, является ли указанный день рабочим (не выходным и не праздничным)
         return date.getDayOfWeek().getValue() < 6 && !PublicHolidays.HOLIDAYS.contains(date);
     }
 
