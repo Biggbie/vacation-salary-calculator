@@ -22,5 +22,7 @@ http://localhost:8082/calculate?averageSalary=50000&startVacationDate=2024-01-15
 # Стек проекта
 
 SpringBoot
+
 Java 11
+
 Stream API
