@@ -14,6 +14,7 @@ public class VacationCalculatorService {
 
     private static final int MONTHS_IN_YEAR = 12;
     private static final double NDFL_FACTOR = 0.87;
+    //Дополнительно введем константу, учитывающую вычет 13% НДФЛ
 
     public VacationSalaryCalculatorResponse calculate(Double averageSalary, Integer vacationDays) {
         // Обычный расчет

@@ -1,5 +1,6 @@
 package ru.plevda.vacation.salary.calculator.controller;
 
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import ru.plevda.vacation.salary.calculator.service.VacationCalculatorService;
 
 import java.time.LocalDate;
 
+@Setter
 @RestController
 public class VacationCalculatorController {
 
