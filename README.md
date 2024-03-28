@@ -26,3 +26,5 @@ SpringBoot
 Java 11
 
 Stream API
+
+JUnit
